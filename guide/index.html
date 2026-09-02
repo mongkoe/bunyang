@@ -86,7 +86,7 @@
   <div class="hero">
     <h1>쓰는 법은<br><em>네 가지</em>뿐입니다</h1>
     <p class="lead">전국에 흩어져 올라오는 <b>조직구인공고</b>를 현장 단위로 묶어 정리한 자료입니다.
-      2026.06.01 ~ 2026.08.31 기준 <b>156개 현장</b>, 14개 시·도가 담겨 있으며 새 공고가 올라오면 갱신됩니다.</p>
+      2026.06.01 ~ 2026.09.02 기준 <b>159개 현장</b>, 14개 시·도가 담겨 있으며 새 공고가 올라오면 갱신됩니다.</p>
   </div>
 
   <div class="access">
@@ -146,5 +146,35 @@
   </div>
 
 </div>
+<script>
+/* 접속 카운터 — 발행본에만 들어간다(로컬 원본에는 없음). 260902.
+   보내는 것: 무작위 방문자ID·기기종류·화면폭·경로. 이름·IP·리포트 내용은 보내지 않는다.
+   실패해도 리포트 열람을 막지 않도록 전체를 try 로 감싼다. */
+(function(){
+  var U="https://script.google.com/macros/s/AKfycbzAj3czIMRmazq8V71tWMBHUoeIIBFO9shvF92mMHKeBumi24N2E2IYNoeLIllMurcWHg/exec", T="bnyg260902";
+  try{
+    var S=window.localStorage, K="__bvid", id=S.getItem(K);
+    if(!id||!/^[0-9a-f]{16}$/.test(id)){
+      var a=new Uint8Array(8);
+      if(window.crypto&&crypto.getRandomValues){crypto.getRandomValues(a);}
+      else{for(var j=0;j<8;j++){a[j]=Math.floor(Math.random()*256);}}
+      id="";for(var i=0;i<8;i++){id+=("0"+a[i].toString(16)).slice(-2);}
+      S.setItem(K,id);
+    }
+    /* 5분 안의 새로고침은 한 번으로 센다 — 안 그러면 숫자가 부풀어 판단을 그르친다. */
+    var TK="__bvt", last=parseInt(S.getItem(TK)||"0",10);
+    if(Date.now()-last<300000){return;}
+    S.setItem(TK,String(Date.now()));
+    var u=navigator.userAgent;
+    var d=/iPhone/.test(u)?"아이폰":/iPad/.test(u)?"아이패드":
+          /Android/.test(u)?"안드로이드":/Macintosh/.test(u)?"맥":
+          /Windows/.test(u)?"윈도우":"기타";
+    var q=U+"?t="+encodeURIComponent(T)+"&vid="+id+"&dev="+encodeURIComponent(d)
+          +"&w="+((window.screen&&screen.width)||0)
+          +"&path="+encodeURIComponent(location.pathname.slice(0,60));
+    if(navigator.sendBeacon){navigator.sendBeacon(q);}else{(new Image()).src=q;}
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
